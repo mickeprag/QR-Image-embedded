@@ -745,7 +745,7 @@ int GetBitLength(BYTE nMode, int ncData, int nVerGroup)
 int EncodeSourceData(LPCSTR lpsSource, int ncLength, int nVerGroup,int m_nBlockLength[MAX_DATACODEWORD],BYTE m_byBlockMode[MAX_DATACODEWORD],BYTE m_byDataCodeWord[MAX_DATACODEWORD])
 {
 
-	ZeroMemory(m_nBlockLength, sizeof(m_nBlockLength));
+	ZeroMemory(m_nBlockLength, sizeof(*m_nBlockLength)*MAX_DATACODEWORD);
 
 	int i, j;
 
@@ -1014,7 +1014,7 @@ int EncodeSourceData(LPCSTR lpsSource, int ncLength, int nVerGroup,int m_nBlockL
 	m_ncDataCodeWordBit = 0;//Bit counter processing unit
 
 
-	ZeroMemory(m_byDataCodeWord, MAX_DATACODEWORD);
+	ZeroMemory(m_byDataCodeWord, sizeof(*m_byDataCodeWord)*MAX_DATACODEWORD);
 
 	for (i = 0; i < m_ncDataBlock && m_ncDataCodeWordBit != -1; ++i)
 	{
@@ -1695,7 +1695,7 @@ void FormatModule(BYTE m_byModuleData[177][177],BYTE m_byAllCodeWord[MAX_ALLCODE
 {
 	int i, j;
 
-	ZeroMemory(m_byModuleData, sizeof(m_byModuleData));
+	ZeroMemory(m_byModuleData, sizeof(**m_byModuleData)*sizeof(*m_byModuleData)*sizeof(m_byModuleData[0]));
 
 
 	//Function module placement
@@ -1779,7 +1779,7 @@ int EncodeData(int nLevel, int nVersion , LPCSTR lpsSource, int sourcelen, unsig
 	m_nLevel = nLevel;
 	m_nMaskingNo = -1;
 
-	ZeroMemory(QR_m_data,MAX_BITDATA);
+	ZeroMemory(QR_m_data,sizeof(*QR_m_data)*MAX_BITDATA);
 	// If the data length is not specified, acquired by lstrlen
 	int ncLength = sourcelen > 0 ? sourcelen : strlen(lpsSource);
 
@@ -1839,7 +1839,7 @@ int EncodeData(int nLevel, int nVersion , LPCSTR lpsSource, int sourcelen, unsig
 	// Calculated the total clear area code word
 	m_ncAllCodeWord = QR_VersonInfo[QR_m_nVersion].ncAllCodeWord;
 
-	ZeroMemory(m_byAllCodeWord, m_ncAllCodeWord);
+	ZeroMemory(m_byAllCodeWord, sizeof(*m_byAllCodeWord)*m_ncAllCodeWord);
 
 	int nDataCwIndex = 0; 	 // Position data processing code word
 
